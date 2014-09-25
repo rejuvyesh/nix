@@ -22,6 +22,7 @@ rejuvnix = pkgs.buildEnv {
       hs.xmonad
       hs.xmonadContrib
       hs.xmonadExtras
+      hs.xmobar
       compton
 
       # vcs
@@ -37,6 +38,7 @@ rejuvnix = pkgs.buildEnv {
       cloc
       graphviz
       silver-searcher
+      emacs
 
       # tools and languages
       rejuvC
@@ -52,9 +54,8 @@ rejuvnix = pkgs.buildEnv {
       dos2unix
 
       # misc
-      hs.hakyll
+      # hs.hakyll
       tmux
-      zsh
 
       # archives
       bchunk
@@ -78,6 +79,8 @@ rejuvnix = pkgs.buildEnv {
       rtmpdump
       torbrowser
       youtubeDL
+      firefox
+      weechat
 
       # image
       gimp
@@ -116,7 +119,7 @@ rejuvHaskell = pkgs.buildEnv {
 rejuvJulia = pkgs.buildEnv {
   name = "rejuvJulia";
   paths = [
-    # juliaGit
+    julia
   ];
 };
 
@@ -142,7 +145,6 @@ rejuvC = pkgs.buildEnv {
     valgrind
     ];  
 };
-
 
 };
 
