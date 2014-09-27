@@ -2,158 +2,222 @@
 
 packageOverrides = self: with pkgs; rec {
 
-# standard environment
-rejuvnix = pkgs.buildEnv {
-  name = "rejuvnix";
-  paths = let
-    hs  = haskellPackages;
-      in [
+local = let
+  cabalStatic = haskellPackages.cabal.override {
+    enableStaticLibraries  	= true;
+    enableSharedLibraries  	= false;
+    enableSharedExecutables	= false;
+  };
+  gitAnnex = stdenv.lib.overrideDerivation (haskellPackages.gitAnnex.override {
+    cabal = cabalStatic;
+  }) (old: {
+       # we pull in lsof and git anyway
+       propagatedUserEnvPkgs = [];
+  });
+  hs  = haskellPackages;
+
+in recurseIntoAttrs rec {
+   # standard environment
+  base = pkgs.buildEnv {
+    name = "rejuvnix";
+    paths = [
       # nix-related
       gem-nix
       nix-prefetch-scripts
       nix-repl
       nox
 
-      # office
-      libreoffice
-      unoconv
-
-      # wm
-      hs.xmonad
-      hs.xmonadContrib
-      hs.xmonadExtras
-      hs.xmobar
-      compton
-
-      # vcs
-      cvs
-      bazaar
-      darcs
-      git
-      gitAnnexStatic
-      mercurial
-      subversion
-
-      # coding
-      cloc
-      graphviz
-      silver-searcher
-      emacs
-
-      # tools and languages
-      rejuvC
-      rejuvHaskell
-      rejuvJulia
-      rejuvJava
-      rejuvJS
-
-      # text
-      hs.pandoc
-      meld
-      colordiff
-      dos2unix
-
-      # misc
-      # hs.hakyll
-      tmux
-
       # archives
       bchunk
+      gnutar
       libarchive
       pigz
       p7zip
       rpm
       unrar
+      (unzip.override { enableNLS = true; })
 
-      # games
-      cowsay
-      wine
-      winetricks
+      # stuff
+      mc
+      parallel
+      reptyr
+      rlwrap
+      tmux
+      tzdata
+      zsh
+      unison
 
-      # web
+      # system
+      extundelete
+      hddtemp
+      inotifyTools
+      lsof
+      netcat
+      nmap
+      utillinuxCurses
+      vnstat
+    ];
+  };
+
+  haskell = hiPrio (pkgs.buildEnv {
+    name = "rejuvnix-haskell";
+    paths = [
+      hs.cabalInstall
+      hs.cabal2nix
+      hs.ghc
+      hs.ghcMod
+    ];
+  });
+
+  go = pkgs.buildEnv {
+    name = "rejuvnix-go";
+    paths = [
+      pkgs.go
+    ];
+  };
+
+  java = pkgs.buildEnv {
+    name = "rejuvnix-java";
+    paths = [
+      icedtea7_jdk
+    ];
+  };
+
+  js = pkgs.buildEnv {
+    name = "rejuvnix-js";
+    paths = [
+      nodejs
+    ];
+  };
+
+  c = pkgs.buildEnv {
+    name = "rejuvnix-c";
+    paths = [
+      gcc
+      gdb
+      valgrind
+    ];
+  };
+
+  office = pkgs.buildEnv {
+    name = "rejuvnix-office";
+    paths = [
+      libreoffice
+      unoconv
+    ];
+  };
+
+  wm = pkgs.buildEnv {
+    name = "rejuvnix-wm";
+    paths = [
+      hs.xmonad
+      hs.xmonadContrib
+      hs.xmonadExtras
+      hs.xmobar
+      compton
+      dmenu
+      wmname
+    ];
+  };
+
+  code = pkgs.buildEnv {
+    name = "rejuvnix-code";
+    paths = [
+      cloc
+      gperftools
+      silver-searcher
+      strace
+
+      cvs
+      bazaar
+      darcs
+      git
+      gitAnnex
+      mercurial
+      subversion
+    ];
+  };
+
+  txt = pkgs.buildEnv {
+    name = "rejuvnix-txt";
+    paths = [
+      calibre
+
+      colordiff
+      convmv
+      dos2unix
+      hs.pandoc
+      htmlTidy
+      meld
+      pdftk
+      wdiff
+
+      emacs
+    ];
+  };
+
+  web = pkgs.buildEnv {
+    name = "rejuvnix-web";
+    paths = [
       aria2
       dropbox-cli
+      firefoxWrapper
       mu
       offlineimap
       quvi
       rtmpdump
       torbrowser
       youtubeDL
-      firefox
-      weechat
+    ];
+  };
 
-      # image
+  # audio = pkgs.buildEnv {
+  #   name = "rejuvnix-audio";
+  #   path = [
+  #     audacity
+  #     mpc
+  #     ncmpcpp
+  #     vorbisgain
+  #     vorbisTools
+  #   ];
+  # };
+
+  video = pkgs.buildEnv {
+    name = "rejuvnix-video";
+    paths = [
+      guvcview
+    ];
+  };
+
+  image = pkgs.buildEnv {
+    name = "rejuvnix-image";
+    paths = [
       gimp
       gimpPlugins.lqrPlugin
       imagemagick
       mcomix
       scrot
-
-    ];  
-};
-
-cabalStatic = haskellPackages.cabal.override {
-  enableStaticLibraries  	= true;
-  enableSharedLibraries  	= false;
-  enableSharedExecutables	= false;
-};
-
-gitAnnexStatic = haskellPackages.gitAnnex.override {
-  cabal = cabalStatic;
-};
-
-rejuvHaskell = pkgs.buildEnv {
-  name = "rejuvHaskell";
-  paths = let
-  hs = haskellPackages;
-  in [
-  # coding
-  hs.cabalInstall
-  hs.cabal2nix
-  hs.ghc
-  hs.ghcMod
-
-  ];
-};
-
-rejuvJulia = pkgs.buildEnv {
-  name = "rejuvJulia";
-  paths = [
-    julia
-  ];
-};
-
-rejuvJava = pkgs.buildEnv {
-  name = "rejuvJava";
-  paths = [
-    icedtea7_jdk
     ];
-};
+  };
 
-rejuvJS = pkgs.buildEnv {
-  name = "rejuvJS";
-  paths = [
-    nodejs
+  win = pkgs.buildEnv {
+    name = "rejuvnix-win";
+    paths = [
+      wine
+      winetricks
     ];
+  };
 };
 
-rejuvC = pkgs.buildEnv {
-  name = "rejuvC";
-  paths = [
-    gcc
-    gdb
-    valgrind
-    ];  
-};
-
-};
+};  
 
 # general options
 allowUnfree = true;
-allowBroken = true;
+
+unison.enableX11 = false;
 
 # plugins
+firefox.enableAdobeFlash       = true;
 firefox.enableGoogleTalkPlugin = true;
-firefox.enableAdobeFlash = true;
 
 }
