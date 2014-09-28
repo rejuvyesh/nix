@@ -173,17 +173,6 @@ in recurseIntoAttrs rec {
     ];
   };
 
-  # audio = pkgs.buildEnv {
-  #   name = "rejuvnix-audio";
-  #   path = [
-  #     audacity
-  #     mpc
-  #     ncmpcpp
-  #     vorbisgain
-  #     vorbisTools
-  #   ];
-  # };
-
   video = pkgs.buildEnv {
     name = "rejuvnix-video";
     paths = [
@@ -191,6 +180,17 @@ in recurseIntoAttrs rec {
     ];
   };
 
+  audio = pkgs.buildEnv {
+    name = "rejuvnix-audio";
+    paths = [
+      audacity
+      alsaLib
+      alsaPlugins
+      alsaUtils
+      mpc
+      ncmpcpp
+    ];
+  };
   image = pkgs.buildEnv {
     name = "rejuvnix-image";
     paths = [
