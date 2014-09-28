@@ -117,6 +117,7 @@ in recurseIntoAttrs rec {
       compton
       dmenu
       wmname
+      hs.arbtt
     ];
   };
 
@@ -167,6 +168,7 @@ in recurseIntoAttrs rec {
       quvi
       rtmpdump
       torbrowser
+      weechat
       youtubeDL
     ];
   };
