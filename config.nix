@@ -124,6 +124,9 @@ in recurseIntoAttrs rec {
       dmenu
       wmname
       hs.arbtt
+
+      gtk_engines
+      gtk-engine-murrine
     ];
   };
 
