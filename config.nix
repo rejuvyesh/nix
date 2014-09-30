@@ -21,7 +21,7 @@ local = let
     };
   });
   hs  = haskellPackages;
-
+  gst = gst_all_1;
 in recurseIntoAttrs rec {
    # standard environment
   base = pkgs.buildEnv {
@@ -184,6 +184,9 @@ in recurseIntoAttrs rec {
     name = "rejuvnix-video";
     paths = [
       guvcview
+      mpv
+      gst.gst-plugins-base
+      gst.gst-plugins-good
     ];
   };
 
