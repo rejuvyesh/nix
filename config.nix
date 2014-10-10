@@ -80,6 +80,13 @@ in recurseIntoAttrs rec {
       hs.cabal2nix
       hs.ghc
       hs.ghcMod
+      hs.stylishHaskell
+      hs.xmonad
+      hs.xmonadContrib
+      hs.xmonadExtras
+      hs.xmobar
+      hs.pandoc
+      hs.arbtt
     ];
   });
 
@@ -124,14 +131,10 @@ in recurseIntoAttrs rec {
   wm = pkgs.buildEnv {
     name = "rejuvnix-wm";
     paths = [
-      hs.xmonad
-      hs.xmonadContrib
-      hs.xmonadExtras
-      hs.xmobar
       compton
       dmenu
       wmname
-      hs.arbtt
+
 
       gtk_engines
       gtk-engine-murrine
@@ -165,7 +168,6 @@ in recurseIntoAttrs rec {
       colordiff
       convmv
       dos2unix
-      hs.pandoc
       ghostscript
 
       htmlTidy
