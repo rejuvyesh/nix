@@ -4,6 +4,7 @@ packageOverrides = self: with pkgs; rec {
 
 local = let
   hs  = haskellPackages;
+  gst = gst_all_1;
 
   # over-rides
   cabalStatic = hs.cabal.override {
@@ -165,6 +166,8 @@ in recurseIntoAttrs rec {
       convmv
       dos2unix
       hs.pandoc
+      ghostscript
+
       htmlTidy
       meld
       pdftk
@@ -197,6 +200,7 @@ in recurseIntoAttrs rec {
       mpv
       gst.gst-plugins-base
       gst.gst-plugins-good
+      swftools
     ];
   };
 
