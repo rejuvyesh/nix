@@ -59,7 +59,6 @@ in recurseIntoAttrs rec {
       tmux
       tzdata
       zsh
-      unison
 
       # system
       extundelete
@@ -237,7 +236,6 @@ in recurseIntoAttrs rec {
 # general options
 allowUnfree = true;
 
-unison.enableX11 = false;
 zathura.useMupdf = true;
 
 # plugins
