@@ -19,18 +19,11 @@ local = let
        # we pull in lsof and git anyway
        propagatedUserEnvPkgs = [];
   });
-  zathura = stdenv.lib.overrideDerivation pkgs.zathura (default: {
-    src = pkgs.fetchurl {
-    url = "https://github.com/fmap/zathura-vi/releases/download/vi-0.2.8/zathura-0.2.7.tar.gz";
-    sha256 = "8cb6553f67c4e53e23f11a2d83c19bc41fcf0c15933d70e801c598c17480dbd2";
-    };
-  });
-  hs  = haskellPackages;
 
   unzip = pkgs.unzip.override { enableNLS = true; };
 
   git = pkgs.gitAndTools.git.override { svnSupport = true; };
-
+  
 in recurseIntoAttrs rec {
    # standard environment
   base = pkgs.buildEnv {
@@ -60,6 +53,7 @@ in recurseIntoAttrs rec {
       tmux
       tzdata
       zsh
+      rxvt_unicode
 
       # system
       extundelete
@@ -134,7 +128,6 @@ in recurseIntoAttrs rec {
       compton
       dmenu
       wmname
-
 
       gtk_engines
       gtk-engine-murrine
