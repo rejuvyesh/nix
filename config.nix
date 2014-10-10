@@ -3,12 +3,16 @@
 packageOverrides = self: with pkgs; rec {
 
 local = let
-  cabalStatic = haskellPackages.cabal.override {
+  hs  = haskellPackages;
+
+  # over-rides
+  cabalStatic = hs.cabal.override {
     enableStaticLibraries  	= true;
     enableSharedLibraries  	= false;
     enableSharedExecutables	= false;
   };
-  gitAnnex = stdenv.lib.overrideDerivation (haskellPackages.gitAnnex.override {
+
+  gitAnnex = stdenv.lib.overrideDerivation (hs.gitAnnex.override {
     cabal = cabalStatic;
   }) (old: {
        # we pull in lsof and git anyway
@@ -21,7 +25,11 @@ local = let
     };
   });
   hs  = haskellPackages;
-  gst = gst_all_1;
+
+  unzip = pkgs.unzip.override { enableNLS = true; };
+
+  git = pkgs.gitAndTools.git.override { svnSupport = true; };
+
 in recurseIntoAttrs rec {
    # standard environment
   base = pkgs.buildEnv {
@@ -41,7 +49,7 @@ in recurseIntoAttrs rec {
       p7zip
       rpm
       unrar
-      (unzip.override { enableNLS = true; })
+      unzip
 
       # stuff
       mc
