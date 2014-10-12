@@ -75,6 +75,7 @@ in recurseIntoAttrs rec {
       hs.ghc
       hs.ghcMod
       hs.stylishHaskell
+      hs.xdgBasedir
       hs.xmonad
       hs.xmonadContrib
       hs.xmonadExtras
