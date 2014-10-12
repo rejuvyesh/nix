@@ -177,7 +177,7 @@ in recurseIntoAttrs rec {
     name = "rejuvnix-web";
     paths = [
       aria2
-      dropbox-cli
+      dropbox
       firefoxWrapper
       mu
       offlineimap
@@ -235,7 +235,6 @@ in recurseIntoAttrs rec {
 
 # general options
 allowUnfree = true;
-
 zathura.useMupdf = true;
 
 # plugins
