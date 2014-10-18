@@ -23,6 +23,8 @@ local = let
   unzip = pkgs.unzip.override { enableNLS = true; };
 
   git = pkgs.gitAndTools.git.override { svnSupport = true; };
+
+  k2pdfopt = pkgs.callPackage ./packages/k2pdfopt {};
   
 in recurseIntoAttrs rec {
    # standard environment
@@ -168,6 +170,8 @@ in recurseIntoAttrs rec {
       meld
       pdftk
       wdiff
+
+      k2pdfopt
 
       emacs
     ];
