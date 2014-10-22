@@ -25,6 +25,15 @@ local = let
   git = pkgs.gitAndTools.git.override { svnSupport = true; };
 
   k2pdfopt = pkgs.callPackage ./packages/k2pdfopt {};
+
+  zathura = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper (_: {
+    zathura_core = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper.zathura_core (_ : {
+      src = pkgs.fetchurl {
+        url = "https://github.com/fmap/zathura-vi/releases/download/vi-0.2.8/zathura-0.2.7.tar.gz";
+        sha256 = "8cb6553f67c4e53e23f11a2d83c19bc41fcf0c15933d70e801c598c17480dbd2";
+      };
+    });
+  });
   
 in recurseIntoAttrs rec {
    # standard environment
@@ -215,6 +224,7 @@ in recurseIntoAttrs rec {
       ncmpcpp
     ];
   };
+
   image = pkgs.buildEnv {
     name = "rejuvnix-image";
     paths = [
