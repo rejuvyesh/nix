@@ -13,17 +13,6 @@ local = let
     enableSharedExecutables	= false;
   };
 
-  gitAnnex = stdenv.lib.overrideDerivation (hs.gitAnnex.override {
-    cabal = cabalStatic;
-  }) (old: {
-       # we pull in lsof and git anyway
-       propagatedUserEnvPkgs = [];
-  });
-
-  unzip = pkgs.unzip.override { enableNLS = true; };
-
-  git = pkgs.gitAndTools.git.override { svnSupport = true; };
-
   k2pdfopt = pkgs.callPackage ./packages/k2pdfopt {};
 
   zathura = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper (_: {
@@ -37,7 +26,7 @@ local = let
   
 in recurseIntoAttrs rec {
    # standard environment
-  base = pkgs.buildEnv {
+  base = hiPrio (pkgs.buildEnv {
     name = "rejuvnix";
     paths = [
       # nix-related
@@ -54,7 +43,7 @@ in recurseIntoAttrs rec {
       p7zip
       rpm
       unrar
-      unzip
+      unzipNLS
 
       # stuff
       mc
@@ -76,7 +65,7 @@ in recurseIntoAttrs rec {
       utillinuxCurses
       vnstat
     ];
-  };
+  });
 
   haskell = hiPrio (pkgs.buildEnv {
     name = "rejuvnix-haskell";
@@ -157,8 +146,8 @@ in recurseIntoAttrs rec {
       cvs
       bazaar
       darcs
-      git
-      gitAnnex
+      gitFull
+      hs.gitAnnex
       mercurial
       subversion
     ];
