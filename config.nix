@@ -75,11 +75,6 @@ in recurseIntoAttrs rec {
       hs.ghc
       hs.ghcMod
       hs.stylishHaskell
-      hs.xdgBasedir
-      hs.xmonad
-      hs.xmonadContrib
-      hs.xmonadExtras
-      hs.xmobar
       hs.pandoc
       hs.arbtt
     ];
@@ -129,6 +124,11 @@ in recurseIntoAttrs rec {
       compton
       dmenu
       wmname
+      hs.xdgBasedir
+      hs.xmonad
+      hs.xmonadContrib
+      hs.xmonadExtras
+      hs.xmobar
 
       gtk_engines
       gtk-engine-murrine
