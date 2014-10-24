@@ -145,6 +145,12 @@ in recurseIntoAttrs rec {
       silver-searcher
       strace
 
+    ];
+  };
+
+  vcs = pkgs.buildEnv {
+    name = "rejuvnix-vcs";
+    paths = [
       cvs
       bazaar
       darcs
