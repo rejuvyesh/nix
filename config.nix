@@ -103,6 +103,13 @@ in recurseIntoAttrs rec {
     ];
   };
 
+  julia = pkgs.buildEnv {
+    name = "rejuvnix-julia";
+    paths = [
+      pkgs.julia
+    ];
+  };
+
   c = pkgs.buildEnv {
     name = "rejuvnix-c";
     paths = [
