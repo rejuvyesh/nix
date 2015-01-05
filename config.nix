@@ -87,7 +87,13 @@ in recurseIntoAttrs rec {
       hs.ghcMod
       hs.stylishHaskell
       hs.pandoc
+      hs.pandocCiteproc
+      hs.pandocLive
       hs.arbtt
+      hs.hledger
+      hs.hledgerWeb
+      hs.vimus
+      hs.hserv
     ];
   });
 
