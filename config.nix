@@ -3,6 +3,15 @@
 packageOverrides = self: with pkgs; rec {
 
 local = let
+  haskellPackages = pkgs.recurseIntoAttrs (
+    pkgs.haskellPackages.override {
+      extension = self : super :
+      let callPackage = self.callPackage;
+      in {
+        pandocLive = callPackage ./packages/pandoc-live.nix {};
+        hserv = callPackage ./packages/hserv.nix {};
+        arbtt = callPackage ./packages/arbtt.nix {};
+  };});
   hs  = haskellPackages;
   gst = gst_all_1;
 
