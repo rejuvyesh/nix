@@ -85,16 +85,6 @@ in recurseIntoAttrs rec {
       hs.cabalInstall
       hs.cabal2nix
       hs.ghc
-      hs.ghcMod
-      hs.stylishHaskell
-      hs.pandoc
-      hs.pandocCiteproc
-      hs.pandocLive
-      hs.arbtt
-      hs.hledger
-      hs.hledgerWeb
-      hs.vimus
-      hs.hserv
     ];
   });
 
@@ -143,7 +133,7 @@ in recurseIntoAttrs rec {
     ];
   };
 
-  wm = pkgs.buildEnv {
+  wm = hiPrio (pkgs.buildEnv {
     name = "rejuvnix-wm";
     paths = [
       compton
@@ -154,11 +144,12 @@ in recurseIntoAttrs rec {
       hs.xmonadContrib
       hs.xmonadExtras
       hs.xmobar
-
+      hs.arbtt
+      
       gtk_engines
       gtk-engine-murrine
     ];
-  };
+  });
 
   code = pkgs.buildEnv {
     name = "rejuvnix-code";
@@ -201,6 +192,15 @@ in recurseIntoAttrs rec {
       wdiff
 
       k2pdfopt
+      hs.stylishHaskell
+      hs.pandoc
+      hs.pandocCiteproc
+      hs.pandocLive
+      hs.ghcMod
+      
+      hs.hledger
+      hs.hledgerWeb
+
 
       emacs
     ];
@@ -219,6 +219,8 @@ in recurseIntoAttrs rec {
       torbrowser
       weechat
       youtubeDL
+
+      hs.hserv
       hs.firewallAuth
     ];
   };
@@ -242,7 +244,8 @@ in recurseIntoAttrs rec {
       alsaPlugins
       alsaUtils
       mpc
-      ncmpcpp
+      mpdcron
+      hs.vimus
     ];
   };
 
