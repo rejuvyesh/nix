@@ -11,6 +11,7 @@ local = let
         pandocLive = callPackage ./packages/pandoc-live.nix {};
         hserv = callPackage ./packages/hserv.nix {};
         arbtt = callPackage ./packages/arbtt.nix {};
+        firewallAuth = callPackage ./packages/firewall-auth.nix {};
   };});
   hs  = haskellPackages;
   gst = gst_all_1;
@@ -218,6 +219,7 @@ in recurseIntoAttrs rec {
       torbrowser
       weechat
       youtubeDL
+      hs.firewallAuth
     ];
   };
 
