@@ -14,7 +14,6 @@ local = let
         firewallAuth = callPackage ./packages/firewall-auth.nix {};
   };});
   hs  = haskellPackages;
-  gst = gst_all_1;
 
   # over-rides
   cabalStatic = hs.cabal.override {
@@ -22,8 +21,6 @@ local = let
     enableSharedLibraries  	= false;
     enableSharedExecutables	= false;
   };
-
-  k2pdfopt = pkgs.callPackage ./packages/k2pdfopt {};
 
   zathura = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper (_: {
     zathura_core = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper.zathura_core (_ : {
@@ -119,7 +116,7 @@ in recurseIntoAttrs rec {
   c = pkgs.buildEnv {
     name = "rejuvnix-c";
     paths = [
-      gcc
+      # gcc
       gdb
       valgrind
     ];
@@ -138,7 +135,7 @@ in recurseIntoAttrs rec {
     paths = [
       compton
       dmenu
-      wmname
+      # wmname
       hs.xdgBasedir
       hs.xmonad
       hs.xmonadContrib
@@ -158,7 +155,11 @@ in recurseIntoAttrs rec {
       gperftools
       silver-searcher
       strace
+      graphviz
 
+      # db
+      sqliteInteractive
+      sqliteman
     ];
   };
 
@@ -169,7 +170,8 @@ in recurseIntoAttrs rec {
       bazaar
       darcs
       gitFull
-      hs.gitAnnex
+      gitAndTools.darcsToGit
+      gitAndTools.gitAnnex
       mercurial
       subversion
     ];
@@ -180,7 +182,8 @@ in recurseIntoAttrs rec {
     paths = [
       calibre
       zathura
-
+      pdfgrep
+      
       colordiff
       convmv
       dos2unix
@@ -191,7 +194,6 @@ in recurseIntoAttrs rec {
       pdftk
       wdiff
 
-      k2pdfopt
       hs.stylishHaskell
       hs.pandoc
       hs.pandocCiteproc
@@ -201,7 +203,6 @@ in recurseIntoAttrs rec {
       hs.hledger
       hs.hledgerWeb
 
-
       emacs
     ];
   };
@@ -210,7 +211,6 @@ in recurseIntoAttrs rec {
     name = "rejuvnix-web";
     paths = [
       aria2
-      dropbox
       firefoxWrapper
       mu
       offlineimap
@@ -218,8 +218,6 @@ in recurseIntoAttrs rec {
       rtmpdump
       torbrowser
       weechat
-      youtubeDL
-
       hs.hserv
       hs.firewallAuth
     ];
@@ -230,8 +228,6 @@ in recurseIntoAttrs rec {
     paths = [
       guvcview
       mpv
-      gst.gst-plugins-base
-      gst.gst-plugins-good
       swftools
     ];
   };
