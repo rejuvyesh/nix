@@ -3,24 +3,16 @@
 packageOverrides = self: with pkgs; rec {
 
 local = let
-  haskellPackages = pkgs.recurseIntoAttrs (
-    pkgs.haskellPackages.override {
+  haskellngPackages = pkgs.recurseIntoAttrs (
+    pkgs.haskellngPackages.override {
       extension = self : super :
       let callPackage = self.callPackage;
       in {
-        pandocLive = callPackage ./packages/pandoc-live.nix {};
-        hserv = callPackage ./packages/hserv.nix {};
-        arbtt = callPackage ./packages/arbtt.nix {};
-        firewallAuth = callPackage ./packages/firewall-auth.nix {};
+        pandoc-live = callPackage ./packages/pandoc-live.nix {};
+        firewall-auth = callPackage ./packages/firewall-auth.nix {};
   };});
-  hs  = haskellPackages;
 
-  # over-rides
-  cabalStatic = hs.cabal.override {
-    enableStaticLibraries  	= true;
-    enableSharedLibraries  	= false;
-    enableSharedExecutables	= false;
-  };
+  hs  = haskellngPackages;
 
   zathura = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper (_: {
     zathura_core = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper.zathura_core (_ : {
@@ -79,7 +71,7 @@ in recurseIntoAttrs rec {
   haskell = hiPrio (pkgs.buildEnv {
     name = "rejuvnix-haskell";
     paths = [
-      hs.cabalInstall
+      hs.cabal-install
       hs.cabal2nix
       hs.ghc
     ];
@@ -136,10 +128,10 @@ in recurseIntoAttrs rec {
       compton
       dmenu
       # wmname
-      hs.xdgBasedir
+      hs.xdg-basedir
       hs.xmonad
-      hs.xmonadContrib
-      hs.xmonadExtras
+      hs.xmonad-contrib
+      hs.xmonad-extras
       hs.xmobar
       hs.arbtt
       
@@ -194,19 +186,27 @@ in recurseIntoAttrs rec {
       pdftk
       wdiff
 
-      hs.stylishHaskell
+      hs.stylish-haskell
       hs.pandoc
-      hs.pandocCiteproc
-      hs.pandocLive
-      hs.ghcMod
-      
-      hs.hledger
-      hs.hledgerWeb
+      hs.pandoc-citeproc
+      hs.pandoc-live
+      hs.ghc-mod
+      hs.hindent
 
       emacs
     ];
   };
 
+  track = lowPrio (pkgs.buildEnv {
+    name = "rejuvnix-track";
+    paths = [
+      hs.hledger
+      hs.hledger-web
+    
+      hs.gitit
+    ];
+  });
+  
   web = pkgs.buildEnv {
     name = "rejuvnix-web";
     paths = [
@@ -219,7 +219,7 @@ in recurseIntoAttrs rec {
       torbrowser
       weechat
       hs.hserv
-      hs.firewallAuth
+      hs.firewall-auth
     ];
   };
 
@@ -261,6 +261,12 @@ in recurseIntoAttrs rec {
     paths = [
       wine
       winetricks
+    ];
+  };
+  www = pkgs.myEnvFun {
+    name = "www";
+    buildInputs = [
+      hs.hakyll 
     ];
   };
 };
