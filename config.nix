@@ -11,6 +11,7 @@ local = let
   };
 
   hs  = haskellngPackages;
+  py3 = python3Packages;
 
   zathura = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper (_: {
     zathura_core = stdenv.lib.overrideDerivation pkgs.zathuraCollection.zathuraWrapper.zathura_core (_ : {
@@ -261,6 +262,38 @@ in recurseIntoAttrs rec {
       winetricks
     ];
   };
+
+  python3env = pkgs.python3.buildEnv.override {
+    extraLibs = [
+      py3.beautifulsoup4
+      py3.lxml
+      py3.mock
+      py3.requests
+    ];
+  };
+  
+  science = pkgs.myEnvFun {
+    name = "science";
+    buildInputs = [
+      python3env
+      py3.ipython
+      py3.ipdb
+      py3.matplotlib
+      py3.numpy
+      py3.pillow
+      py3.pandas
+      py3.scikitlearn
+      py3.scipy
+    ];
+  };
+  
+  python3 = lowPrio (pkgs.buildEnv {
+    name = "rejuvnix-python3";
+    paths = [
+      python3env
+    ];
+  });
+  
   www = pkgs.myEnvFun {
     name = "www";
     buildInputs = [
