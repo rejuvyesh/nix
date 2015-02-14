@@ -3,14 +3,12 @@
 packageOverrides = self: with pkgs; rec {
 
 local = let
-  haskellngPackages = pkgs.recurseIntoAttrs (
-    pkgs.haskellngPackages.override {
-      extension = self : super :
-      let callPackage = self.callPackage;
-      in {
-        pandoc-live = callPackage ./packages/pandoc-live.nix {};
-        firewall-auth = callPackage ./packages/firewall-auth.nix {};
-  };});
+  haskellngPackages = pkgs.haskellngPackages.override {
+      overrides = self : super : {
+        pandoc-live = self.callPackage ./packages/pandoc-live.nix {};
+        firewall-auth = self.callPackage ./packages/firewall-auth.nix {};
+      };    
+  };
 
   hs  = haskellngPackages;
 
