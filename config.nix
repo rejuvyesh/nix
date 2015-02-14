@@ -210,6 +210,8 @@ in recurseIntoAttrs rec {
     name = "rejuvnix-web";
     paths = [
       aria2
+      dropbox-cli
+      eiskaltdcpp
       firefoxWrapper
       mu
       offlineimap
@@ -217,6 +219,7 @@ in recurseIntoAttrs rec {
       rtmpdump
       torbrowser
       weechat
+      awscli
       hs.hserv
       hs.firewall-auth
     ];
@@ -249,6 +252,7 @@ in recurseIntoAttrs rec {
     paths = [
       gimp
       gimpPlugins.lqrPlugin
+      inkscape
       imagemagick
       mcomix
       scrot
