@@ -316,6 +316,4 @@ zathura.useMupdf = true;
 firefox.enableAdobeFlash       = true;
 firefox.enableGoogleTalkPlugin = true;
 
-chromium.enablePepperFlash = true;
-chromium.enablePepperPDF   = true;
 }
