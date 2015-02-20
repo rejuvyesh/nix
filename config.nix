@@ -67,12 +67,27 @@ in recurseIntoAttrs rec {
     ];
   });
 
+  
+  myhs = hs.ghcWithPackages (
+    pkgs: with pkgs; [
+      cabal2nix
+      cabal-install
+      ghc-mod
+      hlint
+      xmonad
+      xmonad-contrib
+      xmonad-extras
+      xmonad
+      xdg-basedir
+      xmobar
+      libmpd
+    ]
+  );
+  
   haskell = hiPrio (pkgs.buildEnv {
     name = "rejuvnix-haskell";
     paths = [
-      hs.cabal-install
-      hs.cabal2nix
-      hs.ghc
+      myhs
     ];
   });
 
@@ -150,11 +165,6 @@ in recurseIntoAttrs rec {
       compton
       dmenu
       # wmname
-      hs.xdg-basedir
-      hs.xmonad
-      hs.xmonad-contrib
-      hs.xmonad-extras
-      hs.xmobar
       hs.arbtt
       
       gtk_engines
@@ -209,10 +219,8 @@ in recurseIntoAttrs rec {
       wdiff
 
       hs.stylish-haskell
-      hs.pandoc
       hs.pandoc-citeproc
       hs.pandoc-live
-      hs.ghc-mod
       hs.hindent
 
       emacs
