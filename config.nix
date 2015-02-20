@@ -112,6 +112,29 @@ in recurseIntoAttrs rec {
       valgrind
     ];
   };
+  
+  science = pkgs.myEnvFun {
+    name = "science";
+    buildInputs = [
+      python3env
+      py3.ipython
+      py3.ipdb
+      py3.matplotlib
+      py3.numpy
+      py3.pillow
+      py3.pandas
+      py3.scikitlearn
+      py3.scipy
+    ];
+  };
+  
+  python3 = lowPrio (pkgs.buildEnv {
+    name = "rejuvnix-python3";
+    paths = [
+      python3env
+    ];
+  });
+  
 
   office = pkgs.buildEnv {
     name = "rejuvnix-office";
@@ -276,27 +299,6 @@ in recurseIntoAttrs rec {
     ];
   };
   
-  science = pkgs.myEnvFun {
-    name = "science";
-    buildInputs = [
-      python3env
-      py3.ipython
-      py3.ipdb
-      py3.matplotlib
-      py3.numpy
-      py3.pillow
-      py3.pandas
-      py3.scikitlearn
-      py3.scipy
-    ];
-  };
-  
-  python3 = lowPrio (pkgs.buildEnv {
-    name = "rejuvnix-python3";
-    paths = [
-      python3env
-    ];
-  });
   
   www = pkgs.myEnvFun {
     name = "www";
