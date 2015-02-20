@@ -150,6 +150,13 @@ in recurseIntoAttrs rec {
     ];
   });
   
+  rust = pkgs.buildEnv {
+    name = "rejuvnix-rust";
+    paths = [
+      cargoSnapshot
+      rustcMaster
+    ];
+  };
 
   office = pkgs.buildEnv {
     name = "rejuvnix-office";
